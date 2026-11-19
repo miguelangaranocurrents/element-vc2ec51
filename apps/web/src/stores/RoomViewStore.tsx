@@ -428,6 +428,8 @@ export class RoomViewStore extends EventEmitter {
                 viaServers: payload.via_servers ?? [],
                 wasContextSwitch: payload.context_switch ?? false,
                 viewingCall,
+                // Viewing a specific event in the room (e.g. "View in room" from the threads list) closes any open thread
+                ...(payload.event_id ? { threadId: null } : {}),
             };
 
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
